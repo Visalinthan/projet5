@@ -18,5 +18,6 @@ public class FireStations {
 
     private int station;
 
+    public FireStations() {}
 
 }

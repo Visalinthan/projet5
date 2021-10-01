@@ -13,4 +13,6 @@ public class Address {
     private String city;
     private int zip;
 
+    public Address() {};
+
 }

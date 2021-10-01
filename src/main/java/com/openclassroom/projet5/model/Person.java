@@ -14,16 +14,18 @@ public class Person {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     private Long id;
-    private String firstName, lastName,email;
-    private String zip,phone;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
     private Date birthdate;
 
-    @Embedded
-    private Address address;
+    //@Embedded
+    //private Address address;
 
+    //@Embedded
+    // MedicalRecords medicalRecords;
 
-    public Person() {
-;
-    }
+    public Person() {}
 
 }

@@ -9,15 +9,11 @@ import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
-@Entity
+@Embeddable
 public class MedicalRecords  {
-    @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
-    private Long id;
     private ArrayList<String> medications = new ArrayList<String>();
     private ArrayList<String> allergies = new ArrayList<String>();
 
-    @Embedded
-    private Person person;
+    public MedicalRecords (){}
 
 }
