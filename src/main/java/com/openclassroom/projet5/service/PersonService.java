@@ -5,7 +5,6 @@ import com.openclassroom.projet5.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class PersonService {
@@ -20,7 +19,7 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public  Person save(Person person){
+    public Person save(Person person){
         return personRepository.save(person);
     }
 

@@ -4,11 +4,13 @@ import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Person {
     @Id
@@ -18,14 +20,15 @@ public class Person {
     private String lastName;
     private String email;
     private String phone;
+
+    @Temporal(TemporalType.DATE)
     private Date birthdate;
 
-    //@Embedded
-    //private Address address;
+   // @JoinColumn(name = "address_id")
+   // @ManyToOne
+    private String address;
 
-    //@Embedded
-    // MedicalRecords medicalRecords;
-
-    public Person() {}
+ //   @Embedded
+ //   private MedicalRecords medicalRecords;
 
 }

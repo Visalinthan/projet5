@@ -13,7 +13,8 @@ public class FireStations {
     @GeneratedValue( strategy = GenerationType.AUTO )
     private Long id;
 
-    @Embedded
+    @JoinColumn(name = "address_id")
+    @ManyToOne
     private Address address;
 
     private int station;
