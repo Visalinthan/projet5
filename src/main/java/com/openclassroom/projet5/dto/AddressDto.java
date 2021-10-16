@@ -1,8 +1,9 @@
-package com.openclassroom.projet5.model;
+package com.openclassroom.projet5.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,14 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Allergy {
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        private Long id;
+@NoArgsConstructor
 
-        private String name;
+@ToString
+public class AddressDto {
+
+    private Long id;
+
+    private String address;
+    private String city;
+    private Integer zip;
+
 
 }

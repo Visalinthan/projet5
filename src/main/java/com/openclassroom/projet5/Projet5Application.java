@@ -2,7 +2,10 @@ package com.openclassroom.projet5;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassroom.projet5.model.JsonSource;
+import com.openclassroom.projet5.dto.MedicalRecordDto;
+import com.openclassroom.projet5.mapper.PersonMapper;
+import com.openclassroom.projet5.model.Person;
+import com.openclassroom.projet5.utils.JsonSource;
 import com.openclassroom.projet5.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -12,24 +15,45 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @SpringBootApplication
 public class Projet5Application {
+
+	private final PersonMapper personMapper;
+
+    private final Resource jsonSource;
+
+	public Projet5Application(
+			PersonMapper personMapper,
+			@Value("classpath:json/data.json") Resource jsonSource) {
+		this.personMapper = personMapper;
+		this.jsonSource = jsonSource;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Projet5Application.class, args);
 	}
 
-	@Value("classpath:json/data.json")
-	private Resource jsonSource;
 	@Bean
 	CommandLineRunner runner(PersonService personService){
 		return args -> {
 			ObjectMapper mapper = new ObjectMapper();
 
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+			//mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
 			//JSON file to Java object
 			JsonSource obj = mapper.readValue(jsonSource.getFile(), JsonSource.class);
-			personService.save(obj.getPersons());
+
+
+			final List<MedicalRecordDto> medicalrecords = obj.getMedicalrecords();
+			final List<Person> persons = obj.getPersons().stream()
+					.map(p -> personMapper.toEntity(p, medicalrecords))
+					.collect(Collectors.toList());
+
+			personService.save(persons);
+
 
 	};
 

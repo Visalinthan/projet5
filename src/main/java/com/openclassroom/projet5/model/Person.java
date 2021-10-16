@@ -1,6 +1,7 @@
 package com.openclassroom.projet5.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,5 +31,8 @@ public class Person {
 
  //   @Embedded
  //   private MedicalRecords medicalRecords;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Allergy> allergys;
 
 }
