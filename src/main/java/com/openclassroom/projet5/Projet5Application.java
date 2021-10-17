@@ -23,7 +23,7 @@ public class Projet5Application {
 
 	private final PersonMapper personMapper;
 
-    private final Resource jsonSource;
+	private final Resource jsonSource;
 
 	public Projet5Application(
 			PersonMapper personMapper,
@@ -55,7 +55,7 @@ public class Projet5Application {
 			personService.save(persons);
 
 
-	};
+		};
 
-}
+	}
 }
