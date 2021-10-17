@@ -1,4 +1,9 @@
-package com.openclassroom.projet5.model;
+package com.openclassroom.projet5.utils;
+
+import com.openclassroom.projet5.model.Address;
+import com.openclassroom.projet5.model.FireStations;
+import com.openclassroom.projet5.model.Medication;
+import com.openclassroom.projet5.model.Person;
 
 import java.util.List;
 import java.util.Map;

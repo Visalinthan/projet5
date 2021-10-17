@@ -2,7 +2,7 @@ package com.openclassroom.projet5;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassroom.projet5.model.JsonSource;
+import com.openclassroom.projet5.utils.JsonSource;
 import com.openclassroom.projet5.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +31,7 @@ public class Projet5Application {
 			JsonSource obj = mapper.readValue(jsonSource.getFile(), JsonSource.class);
 			personService.save(obj.getPersons());
 
-	};
+		};
 
-}
+	}
 }
