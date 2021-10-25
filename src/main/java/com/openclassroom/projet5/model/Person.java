@@ -27,7 +27,7 @@ public class Person {
 
    // @JoinColumn(name = "address_id")
    // @ManyToOne
-    private String address;
+    private Address address;
 
  //   @Embedded
  //   private MedicalRecords medicalRecords;

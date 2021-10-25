@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class PersonMapper {
 
-    public Person toEntity(PersonDto personDto, List<MedicalRecordDto> medicalRecordDtos) {
+    public Person toEntity(PersonDto personDto, List<MedicalRecordDto> medicalRecordDto) {
         Person person = new Person();
 
         person.setId(personDto.getId());
@@ -26,16 +26,16 @@ public class PersonMapper {
         person.setEmail(personDto.getEmail());
         person.setPhone(personDto.getPhone());
 
-        Date birthDate = this.findBirthDateByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDtos);
+        Date birthDate = this.findBirthDateByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
         person.setBirthdate(birthDate);
-        List<Allergy> allergies = this.findAllergyByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDtos);
+        List<Allergy> allergies = this.findAllergyByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
         person.setAllergys(allergies);
 
         return person;
     }
 
-    private Date findBirthDateByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDtos) {
-        String s = medicalRecordDtos.stream()
+    private Date findBirthDateByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto) {
+        String s = medicalRecordDto.stream()
                 .filter(m -> m.getFirstName().equals(firstName) && m.getLastName().equals(lastName))
                 .findFirst()
                 .map(MedicalRecordDto::getBirthDate)
@@ -52,8 +52,8 @@ public class PersonMapper {
     }
 
 
-    private List<Allergy> findAllergyByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDtos){
-        List<String> s = medicalRecordDtos.stream()
+    private List<Allergy> findAllergyByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto){
+        List<String> s = medicalRecordDto.stream()
                 .filter(m -> m.getFirstName().equals(firstName) && m.getLastName().equals(lastName))
                 .findFirst()
                 .map(MedicalRecordDto::getAllergies)
@@ -64,7 +64,6 @@ public class PersonMapper {
             allergy1.setName(allergy);
             allergies.add(allergy1);
         }
-
             return allergies;
 
     }
