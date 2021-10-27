@@ -25,9 +25,10 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
-   // @JoinColumn(name = "address_id")
-   // @ManyToOne
+    @JoinColumn(name = "address_id")
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     private Address address;
+
 
  //   @Embedded
  //   private MedicalRecords medicalRecords;

@@ -1,6 +1,6 @@
 package com.openclassroom.projet5.mapper;
 
-import com.openclassroom.projet5.dto.AddressDto;
+import com.openclassroom.projet5.dto.PersonAddressDto;
 import com.openclassroom.projet5.dto.PersonDto;
 import com.openclassroom.projet5.model.Address;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressMapper {
 
-    public Address toEntity(AddressDto addressDto, PersonDto personDto){
+    public Address toEntity(PersonAddressDto addressDto, PersonDto personDto){
 
         Address address = new Address();
 
