@@ -25,13 +25,13 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
-    @JoinColumn(name = "address_id")
+   /* @JoinColumn(name = "address_id")
     @ManyToOne(fetch = FetchType.EAGER,optional = false)
-    private Address address;
+    private Address address;*/
 
 
- //   @Embedded
- //   private MedicalRecords medicalRecords;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Medication> medications;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Allergy> allergys;

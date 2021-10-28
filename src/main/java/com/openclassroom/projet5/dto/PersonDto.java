@@ -22,7 +22,5 @@ public class PersonDto {
     private Date birthdate;
     private Address address;
 
- //   @Embedded
- //   private MedicalRecords medicalRecords;
 
 }

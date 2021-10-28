@@ -21,5 +21,4 @@ public class PersonController {
         return personService.list();
     }
 
-    //https://www.youtube.com/watch?v=THv-TI1ZNMk&ab_channel=JavaGuides
 }

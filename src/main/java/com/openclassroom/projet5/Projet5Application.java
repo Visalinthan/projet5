@@ -2,6 +2,7 @@ package com.openclassroom.projet5;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassroom.projet5.dto.AddressDto;
 import com.openclassroom.projet5.dto.MedicalRecordDto;
 import com.openclassroom.projet5.mapper.PersonMapper;
 import com.openclassroom.projet5.model.Person;
@@ -45,7 +46,6 @@ public class Projet5Application {
 			//mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
 			//JSON file to Java object
 			JsonSource obj = mapper.readValue(jsonSource.getFile(), JsonSource.class);
-
 
 			final List<MedicalRecordDto> medicalrecords = obj.getMedicalrecords();
 			final List<Person> persons = obj.getPersons().stream()

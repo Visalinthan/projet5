@@ -1,8 +1,11 @@
 package com.openclassroom.projet5.mapper;
 
+import com.openclassroom.projet5.dto.AddressDto;
 import com.openclassroom.projet5.dto.MedicalRecordDto;
 import com.openclassroom.projet5.dto.PersonDto;
+import com.openclassroom.projet5.model.Address;
 import com.openclassroom.projet5.model.Allergy;
+import com.openclassroom.projet5.model.Medication;
 import com.openclassroom.projet5.model.Person;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +22,7 @@ public class PersonMapper {
 
     public Person toEntity(PersonDto personDto, List<MedicalRecordDto> medicalRecordDto) {
         Person person = new Person();
+        Address address = new Address();
 
         person.setId(personDto.getId());
         person.setFirstName(personDto.getFirstName());
@@ -26,8 +30,17 @@ public class PersonMapper {
         person.setEmail(personDto.getEmail());
         person.setPhone(personDto.getPhone());
 
+       /* address.setId(address.getId());
+        address.setAddress(personDto.getAddress().getAddress());
+        address.setCity(personDto.getAddress().getCity());
+        address.setZip(personDto.getAddress().getZip());
+
+        person.setAddress(address);*/
+
         Date birthDate = this.findBirthDateByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
         person.setBirthdate(birthDate);
+        List<Medication> medications = this.findMedicationByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
+        person.setMedications(medications);
         List<Allergy> allergies = this.findAllergyByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
         person.setAllergys(allergies);
 
@@ -65,6 +78,24 @@ public class PersonMapper {
             allergies.add(allergy1);
         }
             return allergies;
+    }
+
+    private List<Medication> findMedicationByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto){
+        List<String> s = medicalRecordDto.stream()
+                .filter(m -> m.getFirstName().equals(firstName) && m.getLastName().equals(lastName))
+                .findFirst()
+                .map(MedicalRecordDto::getMedications)
+                .orElse(null);
+        List<Medication> medications = new ArrayList<>();
+        for (String medication : s) {
+            Medication medication1 = new Medication();
+            String[] m = medication.split(":",0);
+            medication1.setName(m[0]);
+            medication1.setDosage(m[1]);
+
+            medications.add(medication1);
+        }
+        return medications;
 
     }
 
