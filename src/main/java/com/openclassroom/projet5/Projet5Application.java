@@ -2,10 +2,12 @@ package com.openclassroom.projet5;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassroom.projet5.dto.AddressDto;
 import com.openclassroom.projet5.dto.MedicalRecordDto;
+import com.openclassroom.projet5.mapper.FireStationMapper;
 import com.openclassroom.projet5.mapper.PersonMapper;
+import com.openclassroom.projet5.model.FireStation;
 import com.openclassroom.projet5.model.Person;
+import com.openclassroom.projet5.service.FireStationService;
 import com.openclassroom.projet5.utils.JsonSource;
 import com.openclassroom.projet5.service.PersonService;
 
@@ -23,13 +25,16 @@ import java.util.stream.Collectors;
 public class Projet5Application {
 
 	private final PersonMapper personMapper;
+	private final FireStationMapper fireStationMapper;
 
 	private final Resource jsonSource;
 
 	public Projet5Application(
 			PersonMapper personMapper,
+			FireStationMapper fireStationMapper,
 			@Value("classpath:json/data.json") Resource jsonSource) {
 		this.personMapper = personMapper;
+		this.fireStationMapper = fireStationMapper;
 		this.jsonSource = jsonSource;
 	}
 
@@ -38,7 +43,7 @@ public class Projet5Application {
 	}
 
 	@Bean
-	CommandLineRunner runner(PersonService personService){
+	CommandLineRunner runner(PersonService personService, FireStationService fireStationService){
 		return args -> {
 			ObjectMapper mapper = new ObjectMapper();
 
@@ -53,6 +58,13 @@ public class Projet5Application {
 					.collect(Collectors.toList());
 
 			personService.save(persons);
+
+
+			final List<FireStation> fireStations = obj.getFirestations().stream()
+					.map(fireStationDto -> fireStationMapper.toEntity(fireStationDto))
+					.collect(Collectors.toList());
+
+			fireStationService.save(fireStations);
 
 		};
 

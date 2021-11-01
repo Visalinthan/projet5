@@ -1,6 +1,6 @@
 package com.openclassroom.projet5.utils;
 
-import com.openclassroom.projet5.dto.AddressDto;
+import com.openclassroom.projet5.dto.FireStationDto;
 import com.openclassroom.projet5.dto.MedicalRecordDto;
 import com.openclassroom.projet5.dto.PersonDto;
 
@@ -12,7 +12,7 @@ public class JsonSource {
         // private List<AddressDto> addresses;
         // private Map<String,String> allergies;
         // private List<Medication> medications;
-        // private List<FireStations> fireStations;
+         private List<FireStationDto> firestations;
 
         public JsonSource() {
         }
@@ -26,12 +26,19 @@ public class JsonSource {
         }
 
 
-
         public List<MedicalRecordDto> getMedicalrecords() {
                 return medicalrecords;
         }
 
         public void setMedicalrecords(List<MedicalRecordDto> medicalrecords) {
                 this.medicalrecords = medicalrecords;
+        }
+
+        public List<FireStationDto> getFirestations() {
+                return firestations;
+        }
+
+        public void setFirestations(List<FireStationDto> firestations) {
+                this.firestations = firestations;
         }
 }

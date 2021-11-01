@@ -5,14 +5,16 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class MedicalRecords  {
+public class MedicalRecord {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -24,6 +26,5 @@ public class MedicalRecords  {
     @ManyToMany
     private List<Allergy> allergies = new ArrayList<>();
 
-    public MedicalRecords (){}
 
 }

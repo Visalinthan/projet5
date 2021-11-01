@@ -25,9 +25,9 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
-   /* @JoinColumn(name = "address_id")
-    @ManyToOne(fetch = FetchType.EAGER,optional = false)
-    private Address address;*/
+    @JoinColumn(name = "address_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Address address;
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

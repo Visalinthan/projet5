@@ -2,13 +2,15 @@ package com.openclassroom.projet5.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class FireStations {
+public class FireStation {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     private Long id;
@@ -19,6 +21,5 @@ public class FireStations {
 
     private int station;
 
-    public FireStations() {}
 
 }

@@ -1,28 +1,28 @@
 package com.openclassroom.projet5.mapper;
 
-import com.openclassroom.projet5.dto.AddressDto;
 import com.openclassroom.projet5.dto.MedicalRecordDto;
 import com.openclassroom.projet5.dto.PersonDto;
-import com.openclassroom.projet5.model.Address;
-import com.openclassroom.projet5.model.Allergy;
-import com.openclassroom.projet5.model.Medication;
-import com.openclassroom.projet5.model.Person;
+import com.openclassroom.projet5.model.*;
+import com.openclassroom.projet5.repository.AddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonMapper {
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     public Person toEntity(PersonDto personDto, List<MedicalRecordDto> medicalRecordDto) {
         Person person = new Person();
-        Address address = new Address();
+        MedicalRecord medicalRecord = new MedicalRecord();
 
         person.setId(personDto.getId());
         person.setFirstName(personDto.getFirstName());
@@ -30,19 +30,28 @@ public class PersonMapper {
         person.setEmail(personDto.getEmail());
         person.setPhone(personDto.getPhone());
 
-       /* address.setId(address.getId());
-        address.setAddress(personDto.getAddress().getAddress());
-        address.setCity(personDto.getAddress().getCity());
-        address.setZip(personDto.getAddress().getZip());
+        Optional<Address> addressExist = addressRepository.findByAddress(personDto.getAddress());
 
-        person.setAddress(address);*/
+        //addressExist.ifPresent(person::setAddress);
+        /*addressExist.ifPresentOrElse(person::setAddress, () -> {
+            Address address = new Address();
+            address.setAddress(personDto.getAddress());
+            address.setCity(personDto.getCity());
+            address.setZip(personDto.getZip());
+            person.setAddress(address);
+        });*/
+
 
         Date birthDate = this.findBirthDateByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
         person.setBirthdate(birthDate);
         List<Medication> medications = this.findMedicationByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
+
         person.setMedications(medications);
         List<Allergy> allergies = this.findAllergyByFirstNameAndLastName(personDto.getFirstName(), personDto.getLastName(), medicalRecordDto);
         person.setAllergys(allergies);
+
+        medicalRecord.setMedications(medications);
+        medicalRecord.setAllergies(allergies);
 
         return person;
     }
@@ -60,12 +69,12 @@ public class PersonMapper {
         try {
             return new SimpleDateFormat("dd/MM/yyyy").parse(s);
         } catch (ParseException e) {
-          return null;
+            return null;
         }
     }
 
 
-    private List<Allergy> findAllergyByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto){
+    private List<Allergy> findAllergyByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto) {
         List<String> s = medicalRecordDto.stream()
                 .filter(m -> m.getFirstName().equals(firstName) && m.getLastName().equals(lastName))
                 .findFirst()
@@ -77,10 +86,10 @@ public class PersonMapper {
             allergy1.setName(allergy);
             allergies.add(allergy1);
         }
-            return allergies;
+        return allergies;
     }
 
-    private List<Medication> findMedicationByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto){
+    private List<Medication> findMedicationByFirstNameAndLastName(String firstName, String lastName, List<MedicalRecordDto> medicalRecordDto) {
         List<String> s = medicalRecordDto.stream()
                 .filter(m -> m.getFirstName().equals(firstName) && m.getLastName().equals(lastName))
                 .findFirst()
@@ -89,14 +98,15 @@ public class PersonMapper {
         List<Medication> medications = new ArrayList<>();
         for (String medication : s) {
             Medication medication1 = new Medication();
-            String[] m = medication.split(":",0);
+            String[] m = medication.split(":", 0);
             medication1.setName(m[0]);
             medication1.setDosage(m[1]);
 
             medications.add(medication1);
         }
         return medications;
-
     }
+
+
 
 }

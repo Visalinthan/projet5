@@ -1,6 +1,6 @@
 package com.openclassroom.projet5.service;
 
-import com.openclassroom.projet5.model.MedicalRecords;
+import com.openclassroom.projet5.model.MedicalRecord;
 import com.openclassroom.projet5.repository.MedicalRecordRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,15 @@ public class MedicalRecordService {
         this.medicalRecordRepository = medicalRecordRepository;
     }
 
-    public Iterable<MedicalRecords> list(){
+    public Iterable<MedicalRecord> list(){
         return medicalRecordRepository.findAll();
     }
 
-    public MedicalRecords save(MedicalRecords medicalRecord){
+    public MedicalRecord save(MedicalRecord medicalRecord){
         return medicalRecordRepository.save(medicalRecord);
     }
 
-    public Iterable<MedicalRecords> save(Collection<MedicalRecords> medicalRecords) {
+    public Iterable<MedicalRecord> save(Collection<MedicalRecord> medicalRecords) {
         return medicalRecordRepository.saveAll(medicalRecords);
     }
 }
