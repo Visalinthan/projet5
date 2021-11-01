@@ -3,17 +3,22 @@ package com.openclassroom.projet5.utils;
 import com.openclassroom.projet5.dto.FireStationDto;
 import com.openclassroom.projet5.dto.MedicalRecordDto;
 import com.openclassroom.projet5.dto.PersonDto;
+import com.openclassroom.projet5.model.Address;
+import com.openclassroom.projet5.model.FireStations;
+import com.openclassroom.projet5.model.Medication;
+import com.openclassroom.projet5.model.Person;
 
 import java.util.List;
+import java.util.Map;
+import java.util.List;
+
 
 public class JsonSource {
-        private List<PersonDto> persons;
-        private List<MedicalRecordDto> medicalrecords;
-        // private List<AddressDto> addresses;
-        // private Map<String,String> allergies;
-        // private List<Medication> medications;
-         private List<FireStationDto> firestations;
-
+        private List<Person> persons;
+        private List<Address> addresses;
+        private Map<String,String> allergies;
+        private List<Medication> medications;
+        private List<FireStations> fireStations;
         public JsonSource() {
         }
 
@@ -41,4 +46,5 @@ public class JsonSource {
         public void setFirestations(List<FireStationDto> firestations) {
                 this.firestations = firestations;
         }
+
 }
